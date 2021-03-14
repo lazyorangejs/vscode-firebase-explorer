@@ -94,7 +94,6 @@ export async function waitUntilDone(
         } catch (err) {
           reject(err);
         }
-        resolve();
       }, backoffWait);
     });
   }

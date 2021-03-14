@@ -14,8 +14,7 @@
       "env": {
         "VSCODE_DEBUGGING_EXTENSION": "firebase-explorer"
       },
-      "outFiles": ["${workspaceFolder}/dist/extension.js"],
-      "preLaunchTask": "npm: watch"
+      "outFiles": ["${workspaceFolder}/dist/extension.js"]
     },
     {
       "name": "Extension Tests",
@@ -27,7 +26,7 @@
         "--extensionTestsPath=${workspaceFolder}/dist/test"
       ],
       "outFiles": ["${workspaceFolder}/dist/test/**/*.js"],
-      "preLaunchTask": "npm: watch"
+      "preLaunchTask": "npm: build"
     }
   ]
 }

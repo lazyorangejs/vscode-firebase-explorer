@@ -1393,10 +1393,10 @@ dir-glob@^2.0.0:
   dependencies:
     path-type "^3.0.0"
 
-directory-tree@^2.2.0:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/directory-tree/-/directory-tree-2.2.2.tgz#4dedce9aadcbef6c151950786500fc9e0a57b0f8"
-  integrity sha512-OKiSeYsQdnLHgd7uNeCtNEit94MCsHDep1lCinDDkAtGDyopoC/bNx54Jm3O424kxPFf2vafLDDFtVH11sj/bA==
+directory-tree@^2.2.7:
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/directory-tree/-/directory-tree-2.2.7.tgz#4617c794ee89d5618f03fffb7486c7e49df52ad2"
+  integrity sha512-fgTad/YdV6Y2njsCRK4fl4ZUlGhmb5xj1qrZUIMjvnrKvghVqh8dkB+OUssjYVvb/Q2L+5+8XG0l5uTGI9/8iQ==
 
 doctrine@0.7.2:
   version "0.7.2"
@@ -4232,10 +4232,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.2.1:
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
-  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
+typescript@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
+  integrity sha512-qOcYwxaByStAWrBf4x0fibwZvMRG+r4cQoTjbPtUlrWjBHbmCAww1i448U0GJ+3cNNEtebDteo/cHOR3xJ4wEw==
 
 union-value@^1.0.0:
   version "1.0.0"

@@ -1,5 +1,6 @@
 {
   "name": "firebase-explorer",
+  "preview": true,
   "displayName": "Firebase Explorer",
   "description": "Visual Studio Code extension to explore and manage your Firebase projects",
   "version": "0.3.3",
@@ -7,6 +8,12 @@
     "name": "Josep Sayol",
     "email": "josep.sayol@gmail.com"
   },
+  "contributors": [
+    {
+      "email": "vymarkov@gmail.com",
+      "name": "Vitaly Markov"
+    }
+  ],
   "publisher": "jsayol",
   "homepage": "https://github.com/jsayol/vscode-firebase-explorer/blob/master/README.md",
   "bugs": {
@@ -17,7 +24,7 @@
     "url": "https://github.com/jsayol/vscode-firebase-explorer.git"
   },
   "engines": {
-    "vscode": "^1.30.0"
+    "vscode": "^1.50.0"
   },
   "license": "MIT",
   "categories": [
@@ -30,11 +37,10 @@
     "theme": "dark"
   },
   "scripts": {
-    "watch": "webpack --silent --mode=development --env.development",
     "build": "webpack --mode=development --env.development",
+    "dev": "webpack --watch --env.development --info-verbosity verbose",
     "bundle": "webpack --env.production",
     "compile": "tsc -p ./",
-    "build:watch": "webpack --watch --env.development --info-verbosity verbose",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "yarn compile && node ./node_modules/vscode/bin/test",
     "vscode:prepublish": "yarn bundle",
@@ -542,7 +548,7 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-config-standard": "^8.0.1",
     "tslint-loader": "^3.5.4",
-    "typescript": "^3.2.1",
+    "typescript": "^4.2.3",
     "vscode": "^1.1.24",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
@@ -555,7 +561,7 @@
     "bulma-divider": "^0.2.0",
     "bulma-switch": "^2.0.0",
     "chardet": "^0.7.0",
-    "directory-tree": "^2.2.0",
+    "directory-tree": "^2.2.7",
     "iconv-lite": "^0.4.24",
     "jsonwebtoken": "^8.4.0",
     "mime-types": "^2.1.21",

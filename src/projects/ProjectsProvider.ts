@@ -25,8 +25,9 @@ export class ProjectsProvider
   ): Promise<AccountsProviderItem[]> {
     if (!element) {
       // List the available accounts
-      const accounts = AccountManager.getAccounts();
-      return accounts.map(account => new AccountItem(account.info));
+      const accounts = await AccountManager.getAccounts();
+      // accounts[0].info.origin = ''
+      return accounts.filter(itm => itm?.info?.user).map(account => new AccountItem(account.info));
     } else if (element instanceof AccountItem) {
       // List the projects for this account
       const accountManager = AccountManager.for(element.accountInfo);
@@ -90,10 +91,6 @@ export class AccountItem extends vscode.TreeItem {
   ) {
     super(accountInfo.user.email, vscode.TreeItemCollapsibleState.Expanded);
   }
-
-  get tooltip(): string {
-    return this.label!;
-  }
 }
 
 export class ProjectItem extends vscode.TreeItem {
@@ -113,6 +110,7 @@ export class ProjectItem extends vscode.TreeItem {
     super(project.displayName, vscode.TreeItemCollapsibleState.None);
   }
 
+  // @ts-ignore we must override this property
   get tooltip(): string {
     return this.project.projectId;
   }

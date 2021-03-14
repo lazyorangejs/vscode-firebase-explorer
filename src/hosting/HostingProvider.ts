@@ -139,10 +139,8 @@ export class HostingSiteItem extends vscode.TreeItem {
     public site: HostingSite
   ) {
     super(site.site, vscode.TreeItemCollapsibleState.Collapsed);
-  }
 
-  get tooltip(): string {
-    return this.label!;
+    this.tooltip = this.label!
   }
 }
 
@@ -200,6 +198,7 @@ export class HostingReleaseItem extends vscode.TreeItem {
     }
   }
 
+  // @ts-ignore
   get tooltip(): string {
     return this.release.releaseTime;
   }

@@ -5,7 +5,8 @@
     "tasks": [
         {
             "type": "npm",
-            "script": "watch",
+            "label": "npm: build",
+            "script": "compile",
             "problemMatcher": "$tsc-watch",
             "isBackground": true,
             "presentation": {
@@ -15,6 +16,13 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "type": "npm",
+            "script": "dev",
+            "problemMatcher": [],
+            "label": "npm: dev",
+            "detail": "webpack --watch --env.development --info-verbosity verbose"
         }
     ]
 }

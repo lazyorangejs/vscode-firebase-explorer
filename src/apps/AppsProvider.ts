@@ -85,10 +85,8 @@ export class IosAppItem extends vscode.TreeItem {
     public project: FirebaseProject
   ) {
     super(app.appName, vscode.TreeItemCollapsibleState.None);
-  }
 
-  get tooltip(): string {
-    return `• Bundle: ${this.app.bundleId}\n` + `• ID: ${this.app.appId}`;
+    this.tooltip = `• Bundle: ${this.app.bundleId}\n` + `• ID: ${this.app.appId}`;
   }
 }
 
@@ -102,10 +100,8 @@ export class AndroidAppItem extends vscode.TreeItem {
     public project: FirebaseProject
   ) {
     super(app.appName, vscode.TreeItemCollapsibleState.Collapsed);
-  }
 
-  get tooltip(): string {
-    return `• Package: ${this.app.packageName}\n` + `• ID: ${this.app.appId}`;
+    this.tooltip = `• Package: ${this.app.packageName}\n` + `• ID: ${this.app.appId}`
   }
 }
 
@@ -118,10 +114,8 @@ export class FingerprintFolderItem extends vscode.TreeItem {
 
   constructor(public app: AndroidApp, public appItem: AndroidAppItem) {
     super('Fingerprints', vscode.TreeItemCollapsibleState.Collapsed);
-  }
 
-  get tooltip(): string {
-    return 'The SHA certificate fingerprints for this app';
+    this.tooltip = 'The SHA certificate fingerprints for this app'
   }
 }
 
@@ -141,10 +135,8 @@ export class FingerprintItem extends vscode.TreeItem {
       cert.shaHash.match(/../g)!.join(':'),
       vscode.TreeItemCollapsibleState.None
     );
-  }
 
-  get tooltip(): string {
-    return `[${this.cert.certType.replace('_', '-')}] ${this.label}`;
+    this.tooltip = `[${this.cert.certType.replace('_', '-')}] ${this.label}`
   }
 }
 

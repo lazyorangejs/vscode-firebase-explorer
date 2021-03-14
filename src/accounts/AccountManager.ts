@@ -4,6 +4,7 @@ import { FirebaseProject } from '../projects/ProjectManager';
 import { contains, getContext } from '../utils';
 import { ProjectsAPI } from '../projects/api';
 import { AccountsAPI } from './api';
+import { getCliAccount } from './cli';
 
 const RETRY_DELAY = 1000; // ms
 
@@ -53,8 +54,23 @@ export class AccountManager {
     return contains(accounts, email) ? accounts[email].info : null;
   }
 
-  static getAccounts(): AccountData[] {
-    return Object.values(getStateAccounts());
+  public static async getAccounts(): Promise<AccountData[]> {
+    const accounts = Object.values(getStateAccounts()); 
+
+    const cliAccount = await getCliAccount();
+    if (!cliAccount) {
+      const idx = accounts.findIndex(itm => itm.info.origin === 'cli')
+      if (idx !== -1) {
+        accounts.splice(idx, 1)
+      }
+      setStateAccounts(accounts.reduce((acc, itm) => {
+        acc[itm.info.user.email] = itm
+        return acc
+      }, {} as StateAccounts))
+    } else {
+      await AccountManager.addAccount(cliAccount);
+    }
+    return accounts;
   }
 
   static getSelectedAccountInfo(): AccountInfo | null {
@@ -68,7 +84,7 @@ export class AccountManager {
   static addAccount(accountInfo: AccountInfo): Thenable<void> {
     const accounts = getStateAccounts();
 
-    accounts[accountInfo.user.email] = {
+    accounts[accountInfo?.user?.email] = {
       info: accountInfo,
       projects: []
     };
@@ -184,7 +200,7 @@ export class AccountManager {
   }
 
   getEmail(): string {
-    return this.accountData.info.user.email;
+    return this.accountData?.info?.user?.email;
   }
 
   async listProjects({ refresh = false } = {}): Promise<FirebaseProject[]> {

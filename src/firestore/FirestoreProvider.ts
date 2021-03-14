@@ -231,6 +231,7 @@ export class CollectionItem extends vscode.TreeItem {
     super(name, vscode.TreeItemCollapsibleState.Collapsed);
   }
 
+  // @ts-ignore
   get tooltip(): string {
     return getFullPath(this.parentPath, this.name);
   }
@@ -264,6 +265,7 @@ export class DocumentItem extends vscode.TreeItem {
     }
   }
 
+  // @ts-ignore
   get label(): string {
     return this.name;
     // if (this.isRemoved) {
@@ -278,6 +280,7 @@ export class DocumentItem extends vscode.TreeItem {
     label = label;
   }
 
+  // @ts-ignore
   get tooltip(): string {
     let tooltip = getFullPath(this.parentPath, this.name);
 
@@ -289,6 +292,7 @@ export class DocumentItem extends vscode.TreeItem {
     return tooltip;
   }
 
+  // @ts-ignore
   get iconPath(): string {
     if (this.document.createTime || this.isRemoved) {
       return getFilePath('assets', 'firestore/document.svg');
@@ -372,6 +376,7 @@ export class DocumentFieldItem<
     }
   }
 
+  // @ts-ignore
   get tooltip(): string {
     let tooltip = `• Type: ${this.type}`;
 

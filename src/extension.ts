@@ -8,7 +8,6 @@ import {
   StateAccounts,
   AccountData
 } from './accounts/AccountManager';
-import { getCliAccount } from './accounts/cli';
 import { registerAccountsCommands } from './accounts/commands';
 import { AppsProvider } from './apps/AppsProvider';
 import { registerAppsCommands } from './apps/commands';
@@ -86,30 +85,26 @@ function registerProvider<T>(
   // vscode.window.registerTreeDataProvider(`firebase-${name}`, provider);
 }
 
+const getExtensionConfig = async (context: vscode.ExtensionContext) => {
+  let extensionConfig = context.globalState.get<ExtensionConfig>('config');
+  
+  // It's the first time we load the extension. Hello world!
+  extensionConfig = { version: EXTENSION_VERSION };
+  context.globalState.update('config', extensionConfig);
+  context.globalState.update('accounts', undefined);
+
+  return extensionConfig
+}
+
 async function initialize(context: vscode.ExtensionContext): Promise<void> {
   if (!PRODUCTION) {
     // context.globalState.update('config', undefined);
   }
 
-  let extensionConfig = context.globalState.get<ExtensionConfig>('config');
-
-  if (!extensionConfig) {
-    // It's the first time we load the extension. Hello world!
-    extensionConfig = { version: EXTENSION_VERSION };
-    context.globalState.update('config', extensionConfig);
-    context.globalState.update('accounts', undefined);
-
-    // Let's try loading the account stored by the Firebase CLI
-    const cliAccount = await getCliAccount();
-    if (cliAccount !== null) {
-      // Found it! Let's add it to the extension accounts
-      AccountManager.addAccount(cliAccount);
-      vscode.window.showInformationMessage(
-        `Detected new account: ${cliAccount.user.email}`
-      );
-    } else {
-      showSignInPrompt();
-    }
+  const extensionConfig = await getExtensionConfig(context)
+  const accounts = await AccountManager.getAccounts()
+  if (accounts?.length === 0) {
+    showSignInPrompt();
   }
 
   if (PRODUCTION && !semver.eq(extensionConfig.version, EXTENSION_VERSION)) {

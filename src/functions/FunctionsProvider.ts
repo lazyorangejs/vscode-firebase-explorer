@@ -194,6 +194,7 @@ export class FunctionTriggerTypeItem extends vscode.TreeItem {
     );
   }
 
+  // @ts-ignore we must override this property
   get tooltip(): string {
     return this.label!;
   }
@@ -218,9 +219,9 @@ export class CloudFunctionItem extends vscode.TreeItem {
     // this.iconPath = getFilePath('assets', 'functions', `${type}-trigger.svg`);
   }
 
-  get tooltip(): string {
-    return this.label!;
-  }
+  // get tooltip(): string {
+  //   return this.label!;
+  // }
 
   setSourceDir(dirPath: string) {
     this.sourceCodeDir = dirPath;

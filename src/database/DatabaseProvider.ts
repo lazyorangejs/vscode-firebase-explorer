@@ -181,6 +181,7 @@ export class DatabaseElementItem extends vscode.TreeItem {
     // this.label = `<strike style="color:#A83434"><i>${this.name}</i></strike>`;
   }
 
+  // @ts-ignore
   get tooltip(): string {
     if (this.isRemoved) {
       return '';
