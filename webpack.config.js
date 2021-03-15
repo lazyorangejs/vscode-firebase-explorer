@@ -1,6 +1,8 @@
 // // @ts-check
 'use strict';
 
+require('dotenv/config');
+
 const path = require('path');
 const semver = require('semver');
 const webpack = require('webpack');
@@ -93,7 +95,7 @@ function getWebviewConfig(env) {
       rules: moduleRules
     },
     resolve: {
-      extensions: ['.ts', '.js']
+      extensions: ['.ts', '.js', '.json']
       // modules: [path.resolve(__dirname, 'src/webviews'), 'node_modules']
     },
     stats: {
@@ -116,6 +118,9 @@ function getExtensionConfig(env) {
     : semver.inc(pkg.version, 'prerelease', 'dev');
 
   const plugins = [
+    new webpack.EnvironmentPlugin({
+      FIREBASE_TOKEN: process.env.FIREBASE_TOKEN
+    }),
     new CleanPlugin(clean, { verbose: false }),
     new webpack.IgnorePlugin(/^spawn-sync$/),
     new webpack.DefinePlugin({

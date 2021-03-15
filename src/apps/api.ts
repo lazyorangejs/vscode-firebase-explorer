@@ -6,7 +6,7 @@ import {
   AccountManager,
   AccountInfo,
   RequestOptions
-} from '../accounts/AccountManager';
+} from '../accounts';
 import { waitUntilDone } from '../operations';
 import { IosAppProps, AndroidAppProps, ShaCertificate } from './apps';
 import { API } from '../api';

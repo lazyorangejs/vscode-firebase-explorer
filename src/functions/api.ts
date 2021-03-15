@@ -2,12 +2,12 @@ import * as request from 'request-promise-native';
 import { contains } from '../utils';
 import {
   AccountInfo,
-  AccountManager,
   RequestOptions
-} from '../accounts/AccountManager';
+} from '../accounts/types';
 import { FirebaseProject } from '../projects/ProjectManager';
 import { getDetailsFromName } from './utils';
 import { API } from '../api';
+import { AccountManager } from '../accounts/AccountManager';
 
 /*
   Documentation:

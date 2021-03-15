@@ -12,3 +12,5 @@ stats.json
 /.firebaserc
 /public
 /.firebase
+
+**/.env

@@ -1,12 +1,8 @@
 import * as request from 'request-promise-native';
-import {
-  AccountInfo,
-  AccountManager,
-  RequestOptions
-} from '../accounts/AccountManager';
 import { FirebaseProject } from '../projects/ProjectManager';
 import { contains } from '../utils';
 import { API } from '../api';
+import { AccountInfo, AccountManager, RequestOptions } from '../accounts';
 
 // https://developers.google.com/apis-explorer/#search/firebase%20hosting/firebasehosting/v1beta1/
 

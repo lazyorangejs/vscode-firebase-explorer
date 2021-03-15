@@ -7,7 +7,7 @@ import {
   getFullPath,
   getFilePath
 } from '../utils';
-import { AccountInfo } from '../accounts/AccountManager';
+import { AccountInfo } from '../accounts';
 
 export class DatabaseProvider
   implements vscode.TreeDataProvider<DatabaseProviderItem> {

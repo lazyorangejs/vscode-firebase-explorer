@@ -7,7 +7,7 @@ import {
   AccountInfo,
   StateAccounts,
   AccountData
-} from './accounts/AccountManager';
+} from './accounts';
 import { registerAccountsCommands } from './accounts/commands';
 import { AppsProvider } from './apps/AppsProvider';
 import { registerAppsCommands } from './apps/commands';
@@ -82,7 +82,6 @@ function registerProvider<T>(
   });
   treeViewStore.add(name, treeView);
   providerStore.add(name, provider);
-  // vscode.window.registerTreeDataProvider(`firebase-${name}`, provider);
 }
 
 const getExtensionConfig = async (context: vscode.ExtensionContext) => {
@@ -102,6 +101,17 @@ async function initialize(context: vscode.ExtensionContext): Promise<void> {
   }
 
   const extensionConfig = await getExtensionConfig(context)
+
+  // in order to use the extension with GitPod that allows to configure environment variables for workspaces
+  // https://www.gitpod.io/docs/environment-variables/
+  const firebaseToken = process.env?.FIREBASE_TOKEN
+  if (firebaseToken) {
+    const accountInfo = await AccountManager.getAccountInfoFromFirebaseToken(firebaseToken)
+    if (accountInfo) {
+      AccountManager.addAccount(accountInfo);
+    }
+  }
+
   const accounts = await AccountManager.getAccounts()
   if (accounts?.length === 0) {
     showSignInPrompt();

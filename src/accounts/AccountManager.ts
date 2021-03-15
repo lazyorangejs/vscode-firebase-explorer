@@ -5,6 +5,10 @@ import { contains, getContext } from '../utils';
 import { ProjectsAPI } from '../projects/api';
 import { AccountsAPI } from './api';
 import { getCliAccount } from './cli';
+import { AccountData, AccountInfo, AccountTokens, AccountUser, RequestOptions, StateAccounts } from './types';
+import * as jwt from 'jsonwebtoken';
+// @ts-ignore
+import { getAccessToken } from 'firebase-tools/lib/auth'
 
 const RETRY_DELAY = 1000; // ms
 
@@ -54,7 +58,7 @@ export class AccountManager {
     return contains(accounts, email) ? accounts[email].info : null;
   }
 
-  public static async getAccounts(): Promise<AccountData[]> {
+  static async getAccounts(): Promise<AccountData[]> {
     const accounts = Object.values(getStateAccounts()); 
 
     const cliAccount = await getCliAccount();
@@ -105,7 +109,7 @@ export class AccountManager {
 
   private accountData: AccountData;
 
-  private constructor(info: AccountInfo) {
+  private constructor (info: Required<AccountInfo>) {
     const accounts = getStateAccounts();
     this.accountData = accounts[info.user.email];
   }
@@ -118,10 +122,6 @@ export class AccountManager {
 
   get info(): AccountInfo {
     return this.accountData.info;
-  }
-
-  get email(): string {
-    return this.accountData.info.user.email;
   }
 
   remove(): Thenable<void> {
@@ -168,7 +168,7 @@ export class AccountManager {
   }
 
   getRefreshToken(): string {
-    return this.accountData.info.tokens.refresh_token;
+    return this.accountData.info?.tokens?.refresh_token;
   }
 
   async getAccessToken(): Promise<string> {
@@ -221,54 +221,10 @@ export class AccountManager {
   listProjectsSync(): FirebaseProject[] | null {
     return this.accountData.projects || null;
   }
-}
 
-export interface GoogleOAuthAccessToken {
-  access_token: string;
-  expires_in: number;
-  scope: string;
-  token_type: string;
-  id_token: string;
+  static async getAccountInfoFromFirebaseToken (firebaseToken: string): Promise<AccountInfo> {
+    const tokens: AccountTokens = await getAccessToken(firebaseToken, [])
+    const user = jwt.decode(tokens.id_token) as AccountUser
+    return { user, tokens, origin: 'cli' }
+  }
 }
-
-export interface StateAccounts {
-  [email: string]: AccountData;
-}
-
-export interface AccountData {
-  info: AccountInfo;
-  projects: FirebaseProject[] | null | undefined;
-}
-
-export interface AccountInfo {
-  user: AccountUser;
-  tokens: AccountTokens;
-  origin: 'login' | 'cli';
-}
-
-export interface AccountUser {
-  iss: string;
-  azp: string;
-  aud: string;
-  sub: string;
-  email: string;
-  email_verified: boolean;
-  at_hash: string;
-  iat: number;
-  exp: number;
-}
-
-export interface AccountTokens {
-  expires_at: number;
-  refresh_token: string;
-  scopes: string[];
-  access_token: string;
-  expires_in: number;
-  scope: string;
-  token_type: string;
-  id_token: string;
-}
-
-export type RequestOptions = Partial<request.OptionsWithUrl> & {
-  retryOn?: number[];
-};

@@ -3,7 +3,7 @@ import {
   AccountInfo,
   AccountManager,
   RequestOptions
-} from '../accounts/AccountManager';
+} from '../accounts';
 import { contains, caseInsensitiveCompare } from '../utils';
 import {
   FirebaseProject,

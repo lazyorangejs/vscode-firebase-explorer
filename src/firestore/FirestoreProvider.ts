@@ -19,7 +19,7 @@ import {
   caseInsensitiveCompare,
   getFilePath
 } from '../utils';
-import { AccountInfo as accountInfo } from '../accounts/AccountManager';
+import { AccountInfo as accountInfo } from '../accounts';
 
 export class FirestoreProvider
   implements vscode.TreeDataProvider<FirestoreProviderItem> {

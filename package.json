@@ -37,20 +37,14 @@
     "theme": "dark"
   },
   "scripts": {
-    "build": "webpack --mode=development --env.development",
     "dev": "webpack --watch --env.development --info-verbosity verbose",
-    "bundle": "webpack --env.production",
+    "test": "yarn compile && node ./node_modules/vscode/bin/test",
+    "build": "webpack --mode=development --env.development",
     "compile": "tsc -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "yarn compile && node ./node_modules/vscode/bin/test",
-    "vscode:prepublish": "yarn bundle",
+    "vscode:prepublish": "webpack --env.production",
     "publish": "yarn publish:patch",
-    "publish:patch": "vsce publish patch --yarn",
-    "publish:minor": "vsce publish minor --yarn",
-    "publish:major": "vsce publish major --yarn",
-    "package": "vsce package --yarn",
-    "webpack": "webpack",
-    "push": "git push -u origin master && git push -u origin --tags"
+    "package": "vsce package --yarn"
   },
   "activationEvents": [
     "onView:firebase-projects",
@@ -562,6 +556,8 @@
     "bulma-switch": "^2.0.0",
     "chardet": "^0.7.0",
     "directory-tree": "^2.2.7",
+    "dotenv": "^8.2.0",
+    "firebase-tools": "^9.6.1",
     "iconv-lite": "^0.4.24",
     "jsonwebtoken": "^8.4.0",
     "mime-types": "^2.1.21",

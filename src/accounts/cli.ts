@@ -1,6 +1,6 @@
 import { homedir } from 'os';
 import { resolve as resolvePath } from 'path';
-import { AccountInfo, AccountUser, AccountTokens } from './AccountManager';
+import { AccountInfo, AccountUser, AccountTokens } from './types';
 import { readFile } from '../utils';
 
 export const CLI_API_CONFIG = {
@@ -30,7 +30,7 @@ export interface CliConfig {
   tokens: AccountTokens;
 }
 
-export function getCliConfigPath(): string {
+function getCliConfigPath(): string {
   return resolvePath(
     homedir(),
     '.config',
@@ -39,13 +39,13 @@ export function getCliConfigPath(): string {
   );
 }
 
-export async function getCliConfig(): Promise<CliConfig | undefined> {
+export async function getCliConfig(): Promise<CliConfig | null> {
   try {
     const configPath = getCliConfigPath();
     return JSON.parse(await readFile(configPath, 'utf8'));
   } catch (err) {
     // Couldn't read or parse the file. Maybe it doesn't exist, that's OK.
-    return;
+    return null;
   }
 }
 

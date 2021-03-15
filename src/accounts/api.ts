@@ -1,7 +1,7 @@
 import * as request from 'request-promise-native';
 import { contains } from '../utils';
 import { CLI_API_CONFIG } from './cli';
-import { AccountInfo, GoogleOAuthAccessToken } from './AccountManager';
+import { AccountInfo, GoogleOAuthAccessToken } from './types';
 
 export const API_CONFIG = {
   authOrigin: 'https://accounts.google.com',
@@ -13,7 +13,7 @@ const instances: { [k: string]: AccountsAPI } = {};
 
 export class AccountsAPI {
   static for(accountInfo: AccountInfo): AccountsAPI {
-    const id = accountInfo.user.email;
+    const id = accountInfo?.user?.email;
 
     if (!contains(instances, id)) {
       instances[id] = new AccountsAPI(accountInfo);

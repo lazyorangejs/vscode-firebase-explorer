@@ -6,7 +6,7 @@ import { FirestoreProvider } from '../firestore/FirestoreProvider';
 import { DatabaseProvider } from '../database/DatabaseProvider';
 import { setContext, ContextValue, getContext } from '../utils';
 import { AppsProvider } from '../apps/AppsProvider';
-import { AccountInfo } from '../accounts/AccountManager';
+import { AccountInfo } from '../accounts';
 import { FunctionsProvider } from '../functions/FunctionsProvider';
 import { HostingProvider } from '../hosting/HostingProvider';
 
