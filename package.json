@@ -3,7 +3,7 @@
   "preview": true,
   "displayName": "Firebase Explorer",
   "description": "Visual Studio Code extension to explore and manage your Firebase projects",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "author": {
     "name": "Josep Sayol",
     "email": "josep.sayol@gmail.com"
@@ -544,7 +544,7 @@
     "tslint-config-standard": "^8.0.1",
     "tslint-loader": "^3.5.4",
     "typescript": "^4.2.3",
-    "vsce": "^1.87.0",
+    "vsce": "^1.96.1",
     "vscode": "^1.1.37",
     "vscode-test": "^1.5.2",
     "webpack": "^4.27.1",

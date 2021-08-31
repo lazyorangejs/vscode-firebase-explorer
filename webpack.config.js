@@ -119,7 +119,7 @@ function getExtensionConfig(env) {
 
   const plugins = [
     new webpack.EnvironmentPlugin({
-      FIREBASE_TOKEN: process.env.FIREBASE_TOKEN
+      // FIREBASE_TOKEN: process.env.FIREBASE_TOKEN
     }),
     new CleanPlugin(clean, { verbose: false }),
     new webpack.IgnorePlugin(/^spawn-sync$/),
