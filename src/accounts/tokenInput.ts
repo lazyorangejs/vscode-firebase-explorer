@@ -16,7 +16,7 @@ export async function showTokenInput(): Promise<void> {
       );
       if (accountInfo?.user) {
         await AccountManager.addAccount(accountInfo);
-        // vscode.commands.executeCommand('firebaseExplorer.projects.refresh');
+        await vscode.commands.executeCommand('firebaseExplorer.projects.refresh');
       } else {
         await vscode.window.showErrorMessage(
           'Unable to fetch an account info by given firebase token. Please try to use another token.'
