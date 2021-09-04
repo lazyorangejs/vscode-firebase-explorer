@@ -20,16 +20,7 @@ export function registerAccountsCommands(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       'firebaseExplorer.accounts.setToken',
-      showTokenInput.bind(context)
-    )
-  );
-}
-
-export function addFirebaseToken(context: vscode.ExtensionContext) {
-  context.subscriptions.push(
-    vscode.commands.registerCommand(
-      'firebaseExplorer.accounts.setToken',
-      showTokenInput.bind(context)
+      showTokenInput
     )
   );
 }
