@@ -6,7 +6,7 @@ import { FirestoreProvider } from '../firestore/FirestoreProvider';
 import { DatabaseProvider } from '../database/DatabaseProvider';
 import { setContext, ContextValue, getContext } from '../utils';
 import { AppsProvider } from '../apps/AppsProvider';
-import { AccountInfo } from '../accounts';
+import { AccountInfo, AccountManager } from '../accounts';
 import { FunctionsProvider } from '../functions/FunctionsProvider';
 import { HostingProvider } from '../hosting/HostingProvider';
 
@@ -84,7 +84,14 @@ function projectSelection(
   }
 }
 
-function refreshProjects(element?: AccountItem): void {
+async function refreshProjects(element?: AccountItem): Promise<void> {
+  if (!element) {
+    const accounts = await AccountManager.getAccounts()
+    if (accounts?.length > 0) {
+      element = new AccountItem(accounts.shift()?.info!)
+    }
+  }
+
   const projectsProvider = providerStore.get<ProjectsProvider>('projects');
   projectsProvider.refresh(element);
 }

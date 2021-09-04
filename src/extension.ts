@@ -23,6 +23,7 @@ import { registerProjectsCommands } from './projects/commands';
 import { ProjectsProvider } from './projects/ProjectsProvider';
 import { providerStore, treeViewStore } from './stores';
 import { setContextObj, readFile } from './utils';
+import { firebaseExplorerOutputChannel } from './output/outputChannel'
 
 export async function activate(context: vscode.ExtensionContext) {
   setContextObj(context);
@@ -107,9 +108,16 @@ async function initialize(context: vscode.ExtensionContext): Promise<void> {
   const firebaseToken = process.env?.FIREBASE_TOKEN
   if (firebaseToken) {
     const accountInfo = await AccountManager.getAccountInfoFromFirebaseToken(firebaseToken)
+    firebaseExplorerOutputChannel.print(JSON.stringify({ msg: 'firebaseToken is found, trying to fetch an account info', accountInfo }))
     if (accountInfo) {
-      AccountManager.addAccount(accountInfo);
+      await AccountManager.addAccount(accountInfo);
     }
+  }
+  
+  if (!firebaseToken) {
+    firebaseExplorerOutputChannel.print(JSON.stringify({
+      msg: 'FIREBASE_TOKEN is not present in environment variables'
+    }))
   }
 
   const accounts = await AccountManager.getAccounts()

@@ -62,18 +62,21 @@ export class AccountManager {
     const accounts = Object.values(getStateAccounts()); 
 
     const cliAccount = await getCliAccount();
-    if (!cliAccount) {
-      const idx = accounts.findIndex(itm => itm.info.origin === 'cli')
-      if (idx !== -1) {
-        accounts.splice(idx, 1)
-      }
-      setStateAccounts(accounts.reduce((acc, itm) => {
-        acc[itm.info.user.email] = itm
-        return acc
-      }, {} as StateAccounts))
-    } else {
+    if (cliAccount) {
       await AccountManager.addAccount(cliAccount);
     }
+    // if (!cliAccount) {
+    //   const idx = accounts.findIndex(itm => itm.info.origin === 'cli')
+    //   if (idx !== -1) {
+    //     accounts.splice(idx, 1)
+    //   }
+    //   setStateAccounts(accounts.reduce((acc, itm) => {
+    //     acc[itm.info.user.email] = itm
+    //     return acc
+    //   }, {} as StateAccounts))
+    // } else {
+    //   await AccountManager.addAccount(cliAccount);
+    // }
     return accounts;
   }
 
