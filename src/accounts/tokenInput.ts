@@ -1,7 +1,8 @@
 import vscode = require('vscode');
+import { firebaseExplorerOutputChannel } from '../output/outputChannel';
 import { AccountManager } from './AccountManager';
 
-export async function showTokenInput() {
+export async function showTokenInput(): Promise<void> {
   const firebaseToken = await vscode.window.showInputBox({
     ignoreFocusOut: true,
     password: true,
@@ -15,14 +16,19 @@ export async function showTokenInput() {
       );
       if (accountInfo?.user) {
         await AccountManager.addAccount(accountInfo);
-        await vscode.commands.executeCommand('firebaseExplorer.projects.refresh');
+        // vscode.commands.executeCommand('firebaseExplorer.projects.refresh');
       } else {
         await vscode.window.showErrorMessage(
           'Unable to fetch an account info by given firebase token. Please try to use another token.'
         );
       }
     } catch (err) {
-      await  vscode.window.showErrorMessage(
+      firebaseExplorerOutputChannel.print(JSON.stringify({
+        err,
+        msg: 'Unable to fetch an account info by given firebase token. Please try to use another token.'
+      }))
+
+      await vscode.window.showErrorMessage(
         'Unable to fetch an account info by given firebase token. Please try to use another token.'
       );
     }

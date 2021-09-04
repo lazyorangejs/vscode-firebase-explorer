@@ -109,7 +109,7 @@ async function initialize(context: vscode.ExtensionContext): Promise<void> {
   if (firebaseToken) {
     const accountInfo = await AccountManager.getAccountInfoFromFirebaseToken(firebaseToken)
     firebaseExplorerOutputChannel.print(JSON.stringify({ msg: 'firebaseToken is found, trying to fetch an account info', accountInfo }))
-    if (accountInfo) {
+    if (accountInfo?.user) {
       await AccountManager.addAccount(accountInfo);
     }
   }
