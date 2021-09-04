@@ -6,7 +6,7 @@
         {
             "type": "npm",
             "label": "npm: build",
-            "script": "compile",
+            "script": "build",
             "problemMatcher": "$tsc-watch",
             "isBackground": true,
             "presentation": {
