@@ -3,6 +3,7 @@ import { AccountItem } from '../projects/ProjectsProvider';
 import { generateNonce, getContext } from '../utils';
 import { AccountManager } from './AccountManager';
 import { endLogin, initiateLogin } from './login';
+import { showTokenInput } from './tokenInput';
 
 export function registerAccountsCommands(context: vscode.ExtensionContext) {
   context.subscriptions.push(
@@ -13,6 +14,15 @@ export function registerAccountsCommands(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       'firebaseExplorer.accounts.remove',
       removeAccount
+    )
+  );
+}
+
+export function addFirebaseToken(context: vscode.ExtensionContext) {
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      'firebaseExplorer.accounts.setToken',
+      showTokenInput.bind(context)
     )
   );
 }

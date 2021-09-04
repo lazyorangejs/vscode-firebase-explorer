@@ -300,6 +300,11 @@
         "command": "firebaseExplorer.database.editEntryValue",
         "title": "Edit Value",
         "category": "Database"
+      },
+      {
+        "command": "firebaseExplorer.accounts.setToken",
+        "title": "Set Firebase Token",
+        "category": "Accounts"
       }
     ],
     "menus": {
