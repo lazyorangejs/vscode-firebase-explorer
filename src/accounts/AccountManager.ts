@@ -9,6 +9,7 @@ import { AccountData, AccountInfo, AccountTokens, AccountUser, RequestOptions, S
 import * as jwt from 'jsonwebtoken';
 // @ts-ignore
 import { getAccessToken } from 'firebase-tools/lib/auth'
+import { firebaseExplorerOutputChannel } from '../output/outputChannel';
 
 const RETRY_DELAY = 1000; // ms
 
@@ -59,7 +60,7 @@ export class AccountManager {
   }
 
   static async getAccounts(): Promise<AccountData[]> {
-    const accounts = Object.values(getStateAccounts()); 
+    const accounts = Object.values(getStateAccounts());
 
     const cliAccount = await getCliAccount();
     if (cliAccount) {
@@ -112,9 +113,9 @@ export class AccountManager {
 
   private accountData: AccountData;
 
-  private constructor (info: Required<AccountInfo>) {
+  private constructor(info: Required<AccountInfo>) {
     const accounts = getStateAccounts();
-    this.accountData = accounts[info.user.email];
+    this.accountData = accounts[info?.user?.email];
   }
 
   private saveAccountData(): Thenable<void> {
@@ -225,9 +226,24 @@ export class AccountManager {
     return this.accountData.projects || null;
   }
 
-  static async getAccountInfoFromFirebaseToken (firebaseToken: string): Promise<AccountInfo> {
+  public static async getAccountInfoFromFirebaseToken(firebaseToken: string): Promise<AccountInfo> {
     const tokens: AccountTokens = await getAccessToken(firebaseToken, [])
     const user = jwt.decode(tokens.id_token) as AccountUser
     return { user, tokens, origin: 'cli' }
   }
+
+  public static async addAccountFromFirebaseToken(token: string): Promise<void> {
+    try {
+      const accountInfo = await this.getAccountInfoFromFirebaseToken(token)
+      if (accountInfo?.user) {
+        await AccountManager.addAccount(accountInfo);
+        // @ts-ignore
+        process.emit("account:added", accountInfo)
+      }
+    } catch (err) {
+      firebaseExplorerOutputChannel.print(err)
+      throw new Error('Unable to fetch an account info by given firebase token. Please try to use another token.')
+    }
+  }
 }
+

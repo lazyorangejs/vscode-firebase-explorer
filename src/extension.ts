@@ -25,6 +25,20 @@ import { providerStore, treeViewStore } from './stores';
 import { setContextObj, readFile } from './utils';
 import { firebaseExplorerOutputChannel } from './output/outputChannel'
 
+function subscribeToEvents () {
+  // @ts-ignore
+  process.once('account:added', async (accountInfo: AccountInfo) => {
+    firebaseExplorerOutputChannel.print(JSON.stringify({
+      user: { email: accountInfo?.user?.email },
+      msg: `Account ${accountInfo?.user?.email} has been added`,
+    }))
+
+    await vscode.commands.executeCommand(
+      'firebaseExplorer.projects.refresh'
+    );
+  });
+}
+
 export async function activate(context: vscode.ExtensionContext) {
   setContextObj(context);
 
@@ -101,20 +115,24 @@ async function initialize(context: vscode.ExtensionContext): Promise<void> {
     // context.globalState.update('config', undefined);
   }
 
+  subscribeToEvents()
+
   const extensionConfig = await getExtensionConfig(context)
 
   // in order to use the extension with GitPod that allows to configure environment variables for workspaces
   // https://www.gitpod.io/docs/environment-variables/
   const firebaseToken = process.env?.FIREBASE_TOKEN
   if (firebaseToken) {
-    const accountInfo = await AccountManager.getAccountInfoFromFirebaseToken(firebaseToken)
-    firebaseExplorerOutputChannel.print(JSON.stringify({ msg: 'firebaseToken is found, trying to fetch an account info', accountInfo }))
-    if (accountInfo) {
-      await AccountManager.addAccount(accountInfo);
+    firebaseExplorerOutputChannel.print(JSON.stringify({ msg: 'firebaseToken is found, trying to fetch an account info' }))
+    try {
+      await AccountManager.addAccountFromFirebaseToken(firebaseToken);
+    } catch (err) {
+      if (err instanceof Error) {
+        firebaseExplorerOutputChannel.print(err?.stack ?? "stack is not present")
+        firebaseExplorerOutputChannel.print(err.toString())
+      }
     }
-  }
-  
-  if (!firebaseToken) {
+  } else {
     firebaseExplorerOutputChannel.print(JSON.stringify({
       msg: 'FIREBASE_TOKEN is not present in environment variables'
     }))

@@ -12,8 +12,9 @@ export class ProjectsProvider
 
   // constructor(/*private context: vscode.ExtensionContext*/) {}
 
-  refresh(element?: AccountItem): void {
-    this._onDidChangeTreeData.fire(element);
+  refresh(_element?: AccountItem): void {
+    // @ts-ignore
+    this._onDidChangeTreeData.fire();
   }
 
   getTreeItem(element: AccountsProviderItem): vscode.TreeItem {
