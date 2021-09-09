@@ -3,7 +3,7 @@
   "preview": true,
   "displayName": "Firebase Explorer",
   "description": "Visual Studio Code extension to explore and manage your Firebase projects",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": {
     "name": "Josep Sayol",
     "email": "josep.sayol@gmail.com"
@@ -43,7 +43,9 @@
     "compile": "tsc -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "vscode:prepublish": "webpack --env.development",
-    "package": "vsce package"
+    "prepackage": "npm run build",
+    "package": "vsce package",
+    "publish:ovsx": "npx ovsx publish --pat $OPEN_VSX_TOKEN"
   },
   "activationEvents": [
     "onView:firebase-projects",
@@ -540,7 +542,7 @@
     "copy-webpack-plugin": "^5.0.3",
     "filemanager-webpack-plugin": "^2.0.5",
     "ovsx": "0.1.0-next.a9154dc",
-    "prettier": "^1.15.3",
+    "prettier": "^2.4.0",
     "terser-webpack-plugin": "^1.1.0",
     "ts-loader": "^5.3.1",
     "ts-node": "^7.0.1",
